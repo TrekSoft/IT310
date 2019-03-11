@@ -1,6 +1,6 @@
 # Zealor
 
-## Dev Setup
+## Dev Setup Change
 
 - npm install
 - react-native link
