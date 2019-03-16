@@ -1,4 +1,4 @@
-package com.zealor;
+package com.helloworld;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Zealor";
+        return "helloworld";
     }
 
     @Override
@@ -23,6 +23,6 @@ public class MainActivity extends ReactActivity {
         protected ReactRootView createRootView() {
           return new RNGestureHandlerEnabledRootView(MainActivity.this);
         }
-    };
-  }
+      };
+    }
 }
