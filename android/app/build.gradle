@@ -139,6 +139,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-payments')
     implementation project(':react-native-firebase')
     implementation "com.google.android.gms:play-services-base:16.0.1"
     implementation "com.google.firebase:firebase-core:16.0.6"
@@ -158,3 +159,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
