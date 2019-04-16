@@ -23,11 +23,43 @@ import {
   Radio
 } from 'native-base';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import {PaymentRequest} from 'react-native-payments';
 
 const WHOLE_HOUSE = "whole_house";
 const APARTMENT = "apartment";
 const CABIN = "cabin";
 const BOAT = "boat";
+
+const METHOD_DATA = [{
+  supportedMethods: ['android-pay'],
+  data: {
+    supportedNetworks: ['visa', 'mastercard', 'amex'],
+    currencyCode: 'USD',
+    environment: 'TEST', // defaults to production
+    paymentMethodTokenizationParameters: {
+      tokenizationType: 'NETWORK_TOKEN',
+      parameters: {
+        publicKey: 'your-public-key'
+      }
+    }
+  }
+}];
+
+const DETAILS = {
+  id: 'basic-example',
+  displayItems: [
+    {
+      label: 'Movie Ticket',
+      amount: { currency: 'USD', value: '15.00' }
+    }
+  ],
+  total: {
+    label: 'Merchant Name',
+    amount: { currency: 'USD', value: '15.00' }
+  }
+};
+
+const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS);
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -97,7 +129,9 @@ export default class App extends Component<Props> {
           </Item>
 
           <View style={styles.buttonContainer}>
-            <Button bordered dark style={styles.dateButton}>
+            <Button bordered dark style={styles.dateButton}
+              onPress={() => paymentRequest.show().then((response) => alert(response)).catch((error) => console.log(error)).finally((response) => alert(response))}
+            >
               <Text>All Dates</Text>
             </Button>
 
@@ -106,7 +140,7 @@ export default class App extends Component<Props> {
               'Second',
               {
                 rentalType: this.state.rentalType,
-                location: this.state.location 
+                location: this.state.location
               }
             )}>
               <Text>Guests</Text>
