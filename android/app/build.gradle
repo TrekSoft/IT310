@@ -141,6 +141,7 @@ android {
 dependencies {
     implementation project(':react-native-payments')
     implementation project(':react-native-firebase')
+    implementation project(':tipsi-stripe')
     implementation "com.google.android.gms:play-services-base:16.0.1"
     implementation "com.google.firebase:firebase-core:16.0.6"
     implementation "com.google.firebase:firebase-firestore:17.1.5"

@@ -23,43 +23,17 @@ import {
   Radio
 } from 'native-base';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import {PaymentRequest} from 'react-native-payments';
+import stripe from 'tipsi-stripe'
 
 const WHOLE_HOUSE = "whole_house";
 const APARTMENT = "apartment";
 const CABIN = "cabin";
 const BOAT = "boat";
 
-const METHOD_DATA = [{
-  supportedMethods: ['android-pay'],
-  data: {
-    supportedNetworks: ['visa', 'mastercard', 'amex'],
-    currencyCode: 'USD',
-    environment: 'TEST', // defaults to production
-    paymentMethodTokenizationParameters: {
-      tokenizationType: 'NETWORK_TOKEN',
-      parameters: {
-        publicKey: 'your-public-key'
-      }
-    }
-  }
-}];
-
-const DETAILS = {
-  id: 'basic-example',
-  displayItems: [
-    {
-      label: 'Movie Ticket',
-      amount: { currency: 'USD', value: '15.00' }
-    }
-  ],
-  total: {
-    label: 'Merchant Name',
-    amount: { currency: 'USD', value: '15.00' }
-  }
-};
-
-const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS);
+stripe.setOptions({
+  publishableKey: 'pk_test_K5pZcjk0TdV5FndXD4DVt7wA00mvCaBVGx',
+  androidPayMode: 'test',
+});
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -99,6 +73,23 @@ export default class App extends Component<Props> {
     this.setState({ location: location });
   }
 
+  pay() {
+    stripe.paymentRequestWithNativePay({
+        total_price: '100.00',
+        currency_code: 'USD',
+        shipping_address_required: true,
+        phone_number_required: true,
+        shipping_countries: ['US', 'CA'],
+        line_items: [{
+          currency_code: 'USD',
+          description: 'Tipsi',
+          total_price: '20.00',
+          unit_price: '20.00',
+          quantity: '1',
+        }],
+      }).then((response) => console.log(response));
+  }
+
   renderRadioButtons() {
     return this.apartmentTypes.map(
       (currentType, index) =>
@@ -130,7 +121,7 @@ export default class App extends Component<Props> {
 
           <View style={styles.buttonContainer}>
             <Button bordered dark style={styles.dateButton}
-              onPress={() => paymentRequest.show().then((response) => alert(response)).catch((error) => console.log(error)).finally((response) => alert(response))}
+              onPress={() => this.pay()}
             >
               <Text>All Dates</Text>
             </Button>

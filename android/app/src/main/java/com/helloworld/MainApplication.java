@@ -8,6 +8,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.gettipsi.stripe.StripeReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -32,7 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebasePackage(),
             new RNFirebaseFirestorePackage(),
             new RNFirebaseDatabasePackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new StripeReactPackage()
       );
     }
 
